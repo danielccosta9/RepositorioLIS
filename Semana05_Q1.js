@@ -6,7 +6,7 @@ function myFunction() {
     qtd++ //Sempre que a função for chamada, irá incrementar auqi.
 
     let criarElemento = document.createElement("LI"); //Fazendo a criacao da tag "<li> </li>" 
-    let textoLista = document.createTextNode(`${texto} ${qtd}`);//Adicionando o texto digitado pelo o usuario e a numeracao da quantidade da lista ao lado do texto.
+    let textoLista = document.createTextNode(`${texto} ${qtd}º`);//Adicionando o texto digitado pelo o usuario e a numeracao da quantidade da lista ao lado do texto.
     criarElemento.appendChild(textoLista);
     document.getElementById("myList").appendChild(criarElemento);//Informando o local que irá ficar a lista.
 };
