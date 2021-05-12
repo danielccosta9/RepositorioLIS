@@ -1,7 +1,16 @@
 import dataset from './model/dataset.js';
 import foodsModel from './model/food.js';
 
-foodsModel.load(dataset);
+const formFood = document.querySelector('#formFood');
+
+function loadFoods(){
+
+  if(localStorage.getItem('foods-app:loaded')!== 'ok'){
+    foodsModel.load(dataset);
+    localStorage.setItem('foods-app:loaded', 'ok');
+  }
+}
+
 let foods = foodsModel.readAll();
 
 for (const item of foods) {
@@ -12,12 +21,12 @@ for (const item of foods) {
 
 function addItem(item) {
   let cardHTML = `
-    <div class='col'>
+    <div class='col-sm-6 col-lg-4 col-xl-3 mb-3'>
       <div class='card' style='width: 18rem;'>
         <img src='${item.image}' class='card-img-top' alt='...'>
         <div class='card-body'>
           <h5 class='card-title'>${item.name}</h5>
-          <p class='card-text'>${item.description}</p>
+          <p class='card-text text-justify'>${item.description}</p>
           <a href='#' class='btn btn-primary'>Adicionar</a>
         </div>
       </div>
@@ -26,22 +35,44 @@ function addItem(item) {
 }
 
 const foodForm = document.getElementById('formFood');
-foodForm.onsubmit = function (event) {
-  // Previnir que o modal fique abrindo em loop.
-  event.preventDefault();
 
-  // Montar o objeto food baseado nos dados do formulário.
-  let food = Object.fromEntries(new FormData(formFood));
+function loadFormValue(title, foodName, foodImage, foodDescription) {
+  const formLabel = document.querySelector('#formFoodLabel');
+  const formNameInput = document.querySelector('#name');
+  const formImageInput = document.querySelector('#image');
+  const formDescriptionInput = document.querySelector('#description');
 
-  // Adicionar o item (food) no LocalStorage.
-  const newFood = foodsModel.create(food);
+  formLabel.innerHTML = title;
+  formNameInput.value = foodName;
+  formImageInput.value = foodImage;
+  formDescriptionInput.value = foodDescription;
 
-  const itensDiv = document.getElementById('itens');
-  const cardHTML = addItem(newFood);
-  itensDiv.insertAdjacentHTML('beforeend', cardHTML);
+}
 
-  // Fechar o foodModal
-  var myModalEl = document.getElementById('foodModal');
-  var foodModal = bootstrap.Modal.getInstance(myModalEl);
-  foodModal.toggle();
-};
+function loadFormCreteFood(){
+  loadFormValue('Adicionar Comida', '', '', '');
+
+  foodForm.onsubmit = function (event) {
+    // Previnir que o modal fique abrindo em loop.
+    event.preventDefault();
+
+    // Montar o objeto food baseado nos dados do formulário.
+    let food = Object.fromEntries(new FormData(formFood));
+
+    // Adicionar o item (food) no LocalStorage.
+    const newFood = foodsModel.create(food);
+
+    const itensDiv = document.getElementById('itens');
+    const cardHTML = addItem(newFood);
+    itensDiv.insertAdjacentHTML('beforeend', cardHTML);
+
+    // Fechar o foodModal
+    var myModalEl = document.getElementById('foodModal');
+    var foodModal = bootstrap.Modal.getInstance(myModalEl);
+    foodModal.toggle();
+  };
+}
+
+window.loadFormCreteFood = loadFormCreteFood;
+
+loadFoods();
