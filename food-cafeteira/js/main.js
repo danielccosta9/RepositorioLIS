@@ -21,9 +21,9 @@ for (const item of foods) {
 
 function addItem(item) {
   let cardHTML = `
-    <div class='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-      <div class='card' style='width: 18rem;'>
-        <img src='${item.image}' class='card-img-top' alt='...'>
+    <div class='col'>
+      <div class='card' style='width: 18em;'>
+      <img src='${'images/' + item.image}' class='card-img-top'alt='...'>
         <div class='card-body'>
           <h5 class='card-title'>${item.name}</h5>
           <p class='card-text text-justify'>${item.description}</p>
