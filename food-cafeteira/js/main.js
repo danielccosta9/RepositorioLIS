@@ -23,7 +23,7 @@ function addItem(item) {
   let cardHTML = `
     <div class='col'>
       <div class='card' style='width: 18em;'>
-      <img src='${'images/' + item.image}' class='card-img-top'alt='...'>
+      <img src='images/${item.image}' class='card-img-top'alt='...'>
         <div class='card-body'>
           <h5 class='card-title'>${item.name}</h5>
           <p class='card-text text-justify'>${item.description}</p>
